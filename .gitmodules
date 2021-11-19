@@ -1,0 +1,6 @@
+[submodule "pram_app"]
+	path = pram_app
+	url = https://github.com/quanted/pram_app.git
+[submodule "pram_flask"]
+	path = pram_flask
+	url = https://github.com/quanted/pram_flask.git
