@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: pram-dask-worker
+  name: pram-dask-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pram-dask-worker
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: pram-dask-worker
+    spec:
+      containers:
+      - args:
+        - conda
+        - run
+        - -n
+        - pyenv
+        - --no-capture-output
+        - dask-worker
+        - pram-dask-scheduler:8786
+        image: dbsmith88/pram-dask:latest
+        imagePullPolicy: Always
+        envFrom:
+          - configMapRef:
+              name: pram-config
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "2Gi"
+            cpu: "2000m"
+        name: pram-dask-worker
+        volumeMounts:
+          - mountPath: /src/pram_app
+            name: django-code
+          - mountPath: /src/pram_flask
+            name: flask-code
+      dnsPolicy: ClusterFirst
+      hostname: pram-dask-worker
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      volumes:
+        - name: django-code
+          hostPath:
+            path: /host/django-code
+        - name: flask-code
+          hostPath:
+            path: /host/flask-code

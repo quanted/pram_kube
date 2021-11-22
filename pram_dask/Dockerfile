@@ -9,6 +9,7 @@ WORKDIR /src/
 
 RUN cd /src/ && git clone -b dev-k https://github.com/quanted/pram_app.git
 RUN cd /src/ && git clone -b dev-k https://github.com/quanted/pram_flask.git
+RUN cd /src/pram_flask && git submodule update --init && git submodule foreach --recursive git checkout dev && git submodule foreach --recursive git pull origin dev
 
 RUN conda create --name pyenv python=3.9
 

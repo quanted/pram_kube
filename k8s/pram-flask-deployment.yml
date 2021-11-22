@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: pram-flask
+  name: pram-flask
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pram-flask
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: pram-flask
+    spec:
+      containers:
+      - image: dbsmith88/pram-flask:dev-k
+        imagePullPolicy: Always
+        envFrom:
+          - configMapRef:
+              name: pram-config
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+        name: pram-flask
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /src/app-data
+          name: app-data
+        - mountPath: /src/pram_flask
+          name: flask-code
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+#      volumes:
+#      - name: app-data
+#        persistentVolumeClaim:
+#          claimName: app-data-pvolume-claim1
+      volumes:
+        - name: app-data
+          hostPath:
+            path: /host/app-data
+        - name: flask-code
+          hostPath:
+            path: /host/flask-code
