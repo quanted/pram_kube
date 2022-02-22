@@ -27,7 +27,7 @@ spec:
         - pyenv
         - --no-capture-output
         - dask-scheduler
-        image: dbsmith88/pram-dask:latest
+        image: ghcr.io/quanted/pram-dask:main
         imagePullPolicy: Always
         resources:
           requests:

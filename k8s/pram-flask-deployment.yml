@@ -17,7 +17,7 @@ spec:
         app: pram-flask
     spec:
       containers:
-      - image: dbsmith88/pram-flask:dev-k
+      - image: ghcr.io/quanted/pram_flask:dev-k
         imagePullPolicy: Always
         envFrom:
           - configMapRef:

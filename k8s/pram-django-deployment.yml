@@ -20,7 +20,7 @@ spec:
       - envFrom:
           - configMapRef:
               name: pram-config
-        image: dbsmith88/pram-django:dev-k
+        image: ghcr.io/quanted/pram_app:dev-k
         imagePullPolicy: Always
         name: pram-django
         ports:

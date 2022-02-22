@@ -17,7 +17,7 @@ spec:
         app: pram-nginx
     spec:
       containers:
-        - image: dbsmith88/pram-nginx
+        - image: ghcr.io/quanted/pram-nginx:main
           imagePullPolicy: Always
           name: nginx
           ports:
